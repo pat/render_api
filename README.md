@@ -38,6 +38,7 @@ client = RenderAPI.client(api_key)
 
 ```ruby
 client.services.list(limit: nil, cursor: nil, filters: nil)
+client.services.find(service_id)
 ```
 
 ```ruby

@@ -46,7 +46,7 @@ RSpec.describe "Deploys" do
       stub_request(
         :get, "https://api.render.com/v1/services/#{service_id}/deploys/#{id}"
       ).to_return_json(
-        body:{
+        body: {
           "id" => "my-deploy",
           "commit" => {
             "id" => "string",
