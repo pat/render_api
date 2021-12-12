@@ -29,6 +29,8 @@ client.deploys.list(service_id, limit: nil, cursor: nil, filters: nil)
 client.deploys.create(service_id, clear_cache: "do_not_clear")
 ```
 
+Currently requests return a response object that responds to `data` (the JSON from the API), as well as providing access to rate-limit details: `rate_limit`, `rate_limit_remaining`, and `rate_limit_reset`.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests, and `bundle exec rubocop` to confirm linting and code structure. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
