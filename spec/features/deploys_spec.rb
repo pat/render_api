@@ -29,7 +29,13 @@ RSpec.describe "Deploys" do
     it "returns the new deploy details" do
       response = subject.create(service_id)
 
-      expect(response.data["id"]).to eq("new-deploy")
+      expect(response.id).to eq("new-deploy")
+    end
+
+    it "parses timestamps" do
+      expect(subject.create(service_id).finished_at).to eq(
+        Time.utc(2021, 12, 12, 8, 34, 38, 327_000)
+      )
     end
   end
 
@@ -52,7 +58,7 @@ RSpec.describe "Deploys" do
               "createdAt" => "2021-12-12T08:31:33.670Z",
               "updatedAt" => "2021-12-12T08:31:33.670Z"
             },
-            "cursor" => "string"
+            "cursor" => "the-cursor"
           }
         ]
       )
@@ -61,8 +67,12 @@ RSpec.describe "Deploys" do
     it "returns deploy data" do
       response = subject.list(service_id)
 
-      expect(response.data.length).to eq(1)
-      expect(response.data.first["deploy"]["id"]).to eq("my-deploy")
+      expect(response.length).to eq(1)
+      expect(response.first.id).to eq("my-deploy")
+    end
+
+    it "returns the cursor" do
+      expect(subject.list(service_id).first.cursor).to eq("the-cursor")
     end
   end
 end

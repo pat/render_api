@@ -29,7 +29,20 @@ client.deploys.list(service_id, limit: nil, cursor: nil, filters: nil)
 client.deploys.create(service_id, clear_cache: "do_not_clear")
 ```
 
-Currently requests return a response object that responds to `data` (the JSON from the API), as well as providing access to rate-limit details: `rate_limit`, `rate_limit_remaining`, and `rate_limit_reset`.
+The returned response object can be enumerated upon when a list of records are returned, and also can provide rate-limit details via `rate_limit`, `rate_limit_remaining`, and `rate_limit_reset`.
+
+The data objects respond to underscored versions of the attribute names - e.g. a service responds to `auto_deploy` even though the underlying hash has the key `autoDeploy`. Timestamp strings are automatically converted to Time objects, and nested hashes are also provided as objects.
+
+WHen the data objects are from a list, they also respond to `cursor`, for use with pagination.
+
+```ruby
+services = client.services.list(limit: 20)
+services.each do |service|
+  puts service.id
+  puts service.cursor
+  puts service.service_details.build_command
+end
+```
 
 ## Development
 

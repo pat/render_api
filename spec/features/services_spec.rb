@@ -48,8 +48,8 @@ RSpec.describe "Services" do
     it "returns service data" do
       response = subject.list
 
-      expect(response.data.length).to eq(1)
-      expect(response.data.first["service"]["name"]).to eq("my-service")
+      expect(response.length).to eq(1)
+      expect(response.first.name).to eq("my-service")
     end
   end
 end
