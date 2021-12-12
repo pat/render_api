@@ -22,26 +22,42 @@ Or install it yourself as:
 
 ## Usage
 
+Returned response objects can be enumerated upon when a list of records are returned, and also can provide rate-limit details via `rate_limit`, `rate_limit_remaining`, and `rate_limit_reset` methods.
+
+The response objects respond to underscored versions of the attribute names - e.g. a service responds to `auto_deploy` with the value from the underlying hash for the key `autoDeploy`. Timestamp strings are automatically converted to Time objects, and nested hashes are also provided as these utility objects.
+
+Also: when the response objects are from a list, they respond to `cursor`, for use with pagination.
+
+### Creating a client
+
 ```ruby
 client = RenderAPI.client(api_key)
-client.services.list(limit: nil, cursor: nil, filters: nil)
-client.deploys.list(service_id, limit: nil, cursor: nil, filters: nil)
-client.deploys.create(service_id, clear_cache: "do_not_clear")
 ```
 
-The returned response object can be enumerated upon when a list of records are returned, and also can provide rate-limit details via `rate_limit`, `rate_limit_remaining`, and `rate_limit_reset`.
+### Services
 
-The data objects respond to underscored versions of the attribute names - e.g. a service responds to `auto_deploy` even though the underlying hash has the key `autoDeploy`. Timestamp strings are automatically converted to Time objects, and nested hashes are also provided as objects.
-
-WHen the data objects are from a list, they also respond to `cursor`, for use with pagination.
+```ruby
+client.services.list(limit: nil, cursor: nil, filters: nil)
+```
 
 ```ruby
 services = client.services.list(limit: 20)
+
+puts services.rate_limit, services.rate_limit_remaining
+
 services.each do |service|
   puts service.id
   puts service.cursor
   puts service.service_details.build_command
 end
+```
+
+### Deploys
+
+```ruby
+client.deploys.list(service_id, limit: nil, cursor: nil, filters: nil)
+client.deploys.create(service_id, clear_cache: "do_not_clear")
+client.deploys.find(service_id, deploy_id)
 ```
 
 ## Development

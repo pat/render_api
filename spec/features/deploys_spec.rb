@@ -39,6 +39,35 @@ RSpec.describe "Deploys" do
     end
   end
 
+  describe "find" do
+    let(:id) { "my-deploy" }
+
+    before :each do
+      stub_request(
+        :get, "https://api.render.com/v1/services/#{service_id}/deploys/#{id}"
+      ).to_return_json(
+        body:{
+          "id" => "my-deploy",
+          "commit" => {
+            "id" => "string",
+            "message" => "string",
+            "createdAt" => "2021-12-12T08:31:33.669Z"
+          },
+          "status" => "created",
+          "finishedAt" => "2021-12-12T08:31:33.670Z",
+          "createdAt" => "2021-12-12T08:31:33.670Z",
+          "updatedAt" => "2021-12-12T08:31:33.670Z"
+        }
+      )
+    end
+
+    it "returns deploy data" do
+      response = subject.find(service_id, id)
+
+      expect(response.id).to eq(id)
+    end
+  end
+
   describe "list" do
     before :each do
       stub_request(

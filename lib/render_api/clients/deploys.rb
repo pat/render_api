@@ -14,6 +14,12 @@ module RenderAPI
         )
       end
 
+      def find(service_id, deploy_id)
+        endpoint.get(
+          "/services/#{service_id}/deploys/#{deploy_id}"
+        )
+      end
+
       def list(service_id, ...)
         endpoint.get(
           "/services/#{service_id}/deploys", params: list_parameters(...)
