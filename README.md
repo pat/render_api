@@ -61,6 +61,13 @@ client.deploys.create(service_id, clear_cache: "do_not_clear")
 client.deploys.find(service_id, deploy_id)
 ```
 
+## Owners
+
+```ruby
+client.owners.list(limit: nil, cursor: nil, filters: nil)
+client.owners.find(owner_id)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests, and `bundle exec rubocop` to confirm linting and code structure. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
