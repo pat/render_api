@@ -29,10 +29,11 @@ module RenderAPI
       HTTP
         .auth("Bearer #{api_key}")
         .headers("Accept" => "application/json")
+        .headers("Content-Type" => "application/json")
     end
 
     def request(verb, path, body: nil, params: nil)
-      Response.new http.request(verb, url_for(path), body: body, params: params)
+      Response.new http.request(verb, url_for(path), json: body, params: params)
     end
 
     def url_for(path)
