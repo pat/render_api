@@ -7,7 +7,7 @@ module RenderAPI
     class Deploys < Base
       def create(service_id, clear_cache: nil)
         body = nil
-        body = { clear_cache: clear_cache } unless clear_cache.nil?
+        body = { clearCache: clear_cache } unless clear_cache.nil?
 
         endpoint.post(
           "/services/#{service_id}/deploys", body: body
