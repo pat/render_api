@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "./clients/deploys"
+require_relative "./clients/jobs"
 require_relative "./clients/owners"
 require_relative "./clients/services"
 require_relative "./endpoint"
@@ -13,6 +14,10 @@ module RenderAPI
 
     def deploys
       @deploys ||= Clients::Deploys.new(endpoint)
+    end
+
+    def jobs
+      @jobs ||= Clients::Jobs.new(endpoint)
     end
 
     def owners
