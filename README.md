@@ -68,6 +68,14 @@ client.owners.list(limit: nil, cursor: nil, filters: nil)
 client.owners.find(owner_id)
 ```
 
+## Jobs
+
+```ruby
+client.jobs.list(service_id, limit: nil, cursor: nil, filters: nil)
+client.jobs.create(service_id, start_command: "whoami")
+client.jobs.find(service_id, job_id)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests, and `bundle exec rubocop` to confirm linting and code structure. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
