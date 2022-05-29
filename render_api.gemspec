@@ -17,7 +17,6 @@ Gem::Specification.new do |spec|
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = Dir["lib/**/*"] + %w[LICENSE.txt README.md CHANGELOG.md]
-  spec.test_files = Dir["spec/**/*"] + %w[.rspec Gemfile Rakefile]
 
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |file| File.basename(file) }
