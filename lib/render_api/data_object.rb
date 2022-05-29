@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "./camelise"
+
 module RenderAPI
   class DataObject
     TIME_PATTERN = /\A\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d+Z\z/.freeze
@@ -23,34 +25,15 @@ module RenderAPI
 
     attr_reader :data
 
-    # Borrowed from awrence:
-    # https://github.com/technicalpanda/awrence/blob/main/lib/awrence/methods.rb
-    def camelize(string, first_upper: false)
-      if first_upper
-        string = gsubbed(string, /(?:^|_)([^_\s]+)/)
-        gsubbed(string, %r{/([^/]*)}, "::")
-      else
-        parts = string.split("_", 2)
-        parts[0] << camelize(parts[1], first_upper: true) if parts.size > 1
-        parts[0] || ""
-      end
-    end
-
-    # Borrowed and simplified from awrence:
-    # https://github.com/technicalpanda/awrence/blob/main/lib/awrence/methods.rb
-    def gsubbed(str, pattern, extra = "")
-      str.gsub(pattern) { extra + Regexp.last_match(1).capitalize }
-    end
-
     def method_missing(name, *args, **kwargs, &block)
       return super unless respond_to_missing?(name, false)
       raise ArgumentError if args.any? || kwargs.any? || block
 
-      translate(data[camelize(name.to_s)])
+      translate(data[Camelise.call(name.to_s)])
     end
 
     def respond_to_missing?(name, _include_all)
-      data.key?(camelize(name.to_s))
+      data.key?(Camelise.call(name.to_s))
     end
 
     def translate(object)

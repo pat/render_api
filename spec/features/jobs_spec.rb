@@ -24,6 +24,30 @@ RSpec.describe "Jobs" do
       )
     end
 
+    it "sends the provided payload" do
+      subject.create(service_id, start_command: "whoami")
+
+      expect(
+        a_request(
+          :post, "https://api.render.com/v1/services/#{service_id}/jobs"
+        ).with_json_body do |json|
+          json == { "startCommand" => "whoami" }
+        end
+      ).to have_been_made
+    end
+
+    it "includes the plan id if provided" do
+      subject.create(service_id, start_command: "whoami", plan_id: "a-plan")
+
+      expect(
+        a_request(
+          :post, "https://api.render.com/v1/services/#{service_id}/jobs"
+        ).with_json_body do |json|
+          json == { "startCommand" => "whoami", "planId" => "a-plan" }
+        end
+      ).to have_been_made
+    end
+
     it "returns the new job details" do
       response = subject.create(service_id, start_command: "whoami")
 

@@ -2,6 +2,7 @@
 
 require "http"
 
+require_relative "./camelise"
 require_relative "./response"
 
 module RenderAPI
@@ -18,7 +19,7 @@ module RenderAPI
     end
 
     def post(path, body: nil)
-      request(:post, path, body: body)
+      request(:post, path, body: camelise(body))
     end
 
     def delete(path)
@@ -28,6 +29,19 @@ module RenderAPI
     private
 
     attr_reader :api_key
+
+    def camelise(object)
+      case object
+      when Hash
+        object
+          .transform_keys { |key| Camelise.call(key.to_s) }
+          .transform_values { |value| camelise(value) }
+      when Array
+        object.collect { |item| camelise(item) }
+      else
+        object
+      end
+    end
 
     def handle_error(response)
       raise RequestError, response.body.to_s

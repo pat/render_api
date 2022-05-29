@@ -26,6 +26,28 @@ RSpec.describe "Deploys" do
       )
     end
 
+    it "sends no payload by default" do
+      subject.create(service_id)
+
+      expect(
+        a_request(
+          :post, "https://api.render.com/v1/services/#{service_id}/deploys"
+        ).with { |request| request.body == "" }
+      ).to have_been_made
+    end
+
+    it "sends a payload if clearing the cache" do
+      subject.create(service_id, clear_cache: "clear")
+
+      expect(
+        a_request(
+          :post, "https://api.render.com/v1/services/#{service_id}/deploys"
+        ).with_json_body do |json|
+          json == { "clearCache" => "clear" }
+        end
+      ).to have_been_made
+    end
+
     it "returns the new deploy details" do
       response = subject.create(service_id)
 

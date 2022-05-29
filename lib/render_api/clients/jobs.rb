@@ -7,7 +7,7 @@ module RenderAPI
     class Jobs < Base
       def create(service_id, start_command:, plan_id: nil)
         body = { startCommand: start_command }
-        body[:planId] = plan_id unless plan_id.nil?
+        body[:plan_id] = plan_id unless plan_id.nil?
 
         endpoint.post(
           "/services/#{service_id}/jobs", body: body
