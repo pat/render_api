@@ -61,6 +61,16 @@ client.deploys.create(service_id, clear_cache: "do_not_clear")
 client.deploys.find(service_id, deploy_id)
 ```
 
+### Domains
+
+```ruby
+client.domains.list(service_id, limit: nil, cursor: nil, filters: nil)
+client.domains.create(service_id, name: "example.com")
+client.domains.find(service_id, domain_id)
+client.domains.verify(service_id, domain_id)
+client.domains.delete(service_id, domain_id)
+```
+
 ## Owners
 
 ```ruby

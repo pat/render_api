@@ -21,9 +21,17 @@ module RenderAPI
       request(:post, path, body: body)
     end
 
+    def delete(path)
+      request(:delete, path)
+    end
+
     private
 
     attr_reader :api_key
+
+    def handle_error(response)
+      raise RequestError, response.body.to_s
+    end
 
     def http
       HTTP
@@ -33,7 +41,15 @@ module RenderAPI
     end
 
     def request(verb, path, body: nil, params: nil)
-      Response.new http.request(verb, url_for(path), json: body, params: params)
+      response = http.request(verb, url_for(path), json: body, params: params)
+      handle_error(response) unless response.status.success?
+
+      case response.status.code
+      when 202, 204
+        true
+      else
+        Response.new(response)
+      end
     end
 
     def url_for(path)
