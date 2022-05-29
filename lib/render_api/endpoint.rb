@@ -18,8 +18,16 @@ module RenderAPI
       request(:get, path, params: params)
     end
 
+    def patch(path, body: nil)
+      request(:patch, path, body: camelise(body))
+    end
+
     def post(path, body: nil)
       request(:post, path, body: camelise(body))
+    end
+
+    def put(path, body: nil)
+      request(:put, path, body: camelise(body))
     end
 
     def delete(path)

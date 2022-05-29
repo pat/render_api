@@ -2,7 +2,7 @@
 
 A Ruby interface for [the render.com API](https://render.com/docs/api).
 
-**Please note**: this gem is currently a proof-of-concept and does not support all of the API's endpoints yet - what's covered below in Usage is what's available right now. Full support is definitely the plan, and pull requests are welcome.
+At this point in time all known API endpoints are supported.
 
 ## Installation
 
@@ -51,6 +51,30 @@ services.each do |service|
   puts service.cursor
   puts service.service_details.build_command
 end
+
+# https://api-docs.render.com/reference/create-service
+client.services.create(name: "my-new-service", ...)
+# https://api-docs.render.com/reference/update-service
+client.services.update(service_id, name: "my-new-service", ...)
+client.services.delete(service_id)
+
+client.services.suspend(service_id)
+client.services.resume(service_id)
+client.services.scale(service_id, num_instances: 5)
+
+client.services.list_headers(service_id, limit: nil, cursor: nil, filters: nil)
+client.services.list_routes(service_id, limit: nil, cursor: nil, filters: nil)
+client.services.list_variables(service_id, limit: nil, cursor: nil)
+# Note that updating variables requires all variables to be provided.
+# https://api-docs.render.com/reference/update-env-vars-for-service
+# (i.e. a full update, not a partial update)
+client.services.update_variables(
+  service_id,
+  [
+    { key: "RAILS_ENV", value: "production" },
+    { key: "RAILS_SESSION_SECRET", generate_value: "yes" }
+  ]
+)
 ```
 
 ### Deploys
