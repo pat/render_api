@@ -56,6 +56,7 @@ end
 client.services.create(name: "my-new-service", ...)
 # https://api-docs.render.com/reference/update-service
 client.services.update(service_id, name: "my-new-service", ...)
+client.services.restart(service_id)
 client.services.delete(service_id)
 
 client.services.suspend(service_id)

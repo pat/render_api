@@ -43,6 +43,10 @@ module RenderAPI
         endpoint.post("/services/#{service_id}/resume")
       end
 
+      def restart(service_id)
+        endpoint.post("/services/#{service_id}/restart")
+      end
+
       def scale(service_id, num_instances:)
         endpoint.post(
           "/services/#{service_id}/scale",

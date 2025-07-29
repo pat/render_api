@@ -338,6 +338,35 @@ RSpec.describe "Services" do
     end
   end
 
+  describe "restart" do
+    let(:id) { "my-service" }
+
+    before :each do
+      stub_request(:post, "https://api.render.com/v1/services/#{id}/restart")
+        .to_return(status: 202)
+    end
+
+    it "returns true if successful" do
+      response = subject.restart(id)
+
+      expect(response).to eq(true)
+    end
+
+    it "raises an exception if the request failed" do
+      stub_request(:post, "https://api.render.com/v1/services/#{id}/restart")
+        .to_return_json(
+          status: 404,
+          body: {
+            "id" => "not-found",
+            "message" => "Not Found"
+          }
+        )
+
+      expect { subject.restart(id) }
+        .to raise_error(RenderAPI::RequestError)
+    end
+  end
+
   describe "scale" do
     let(:id) { "my-service" }
 
