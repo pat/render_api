@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./data_object"
+require_relative "data_object"
 
 module RenderAPI
   class Response

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./render_api/client"
+require_relative "render_api/client"
 
 module RenderAPI
   Error = Class.new(StandardError)

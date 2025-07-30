@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./camelise"
+require_relative "camelise"
 
 module RenderAPI
   class DataObject

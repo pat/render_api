@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "./clients/deploys"
-require_relative "./clients/domains"
-require_relative "./clients/jobs"
-require_relative "./clients/owners"
-require_relative "./clients/services"
-require_relative "./endpoint"
+require_relative "clients/deploys"
+require_relative "clients/domains"
+require_relative "clients/jobs"
+require_relative "clients/owners"
+require_relative "clients/services"
+require_relative "endpoint"
 
 module RenderAPI
   class Client

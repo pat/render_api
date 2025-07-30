@@ -2,7 +2,7 @@
 
 require "render_api"
 
-require_relative "./support/webmock"
+require_relative "support/webmock"
 
 RSpec.configure do |config|
   config.disable_monkey_patching!

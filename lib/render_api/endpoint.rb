@@ -2,8 +2,8 @@
 
 require "http"
 
-require_relative "./camelise"
-require_relative "./response"
+require_relative "camelise"
+require_relative "response"
 
 module RenderAPI
   class Endpoint
